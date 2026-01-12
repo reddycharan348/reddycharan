@@ -10,6 +10,11 @@ window.addEventListener('load', () => {
             }, 500);
         }, 500); // Small delay for smooth experience
     }
+    
+    // Initialize rotating title after preloader
+    setTimeout(() => {
+        initRotatingTitle();
+    }, 4000); // Start after typewriter animation completes
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -495,3 +500,57 @@ function initBackgroundAnimation() {
     resize();
     animate();
 }
+
+
+// Rotating Title Animation
+function initRotatingTitle() {
+    const titleElement = document.getElementById('rotating-title');
+    if (!titleElement) return;
+    
+    const titles = [
+        'AI+ Prompt Engineer',
+        'Vibe Coder',
+        'AI Enthusiast',
+        'Tech Explorer'
+    ];
+    
+    let currentIndex = 0;
+    
+    // Remove typewriter animation and add rotating class
+    titleElement.classList.remove('type-writer');
+    titleElement.classList.add('rotating');
+    titleElement.style.width = 'auto';
+    titleElement.style.borderRight = 'none';
+    
+    function rotateTitle() {
+        // Fade out
+        titleElement.classList.add('fade-out');
+        titleElement.classList.remove('fade-in');
+        
+        setTimeout(() => {
+            // Change text
+            currentIndex = (currentIndex + 1) % titles.length;
+            titleElement.textContent = titles[currentIndex];
+            
+            // Fade in
+            titleElement.classList.remove('fade-out');
+            titleElement.classList.add('fade-in');
+        }, 500);
+    }
+    
+    // Rotate every 3 seconds
+    setInterval(rotateTitle, 3000);
+}
+
+// Scroll Indicator Click Handler
+document.addEventListener('DOMContentLoaded', () => {
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    if (scrollIndicator) {
+        scrollIndicator.addEventListener('click', () => {
+            const nextSection = document.querySelector('.section');
+            if (nextSection) {
+                nextSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+});
