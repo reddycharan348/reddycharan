@@ -125,10 +125,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             emailjs.send(serviceID, templateID, templateParams)
                 .then(() => {
-                    alert('Thank you! Your message has been sent successfully.');
+                    contactForm.classList.add('success');
                     contactForm.reset();
-                    btn.innerText = originalText;
-                    btn.disabled = false;
+                    setTimeout(() => {
+                        contactForm.classList.remove('success');
+                        btn.innerText = originalText;
+                        btn.disabled = false;
+                    }, 5000);
                 }, (err) => {
                     alert('Failed to send message. Please try again later.');
                     console.error('EmailJS Error:', err);
