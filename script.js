@@ -102,6 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Form Submission with EmailJS
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
+        // Initialize EmailJS with Public Key
+        emailjs.init("_KIpKmWfbZ2H4Yp00");
+
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
@@ -112,18 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.disabled = true;
 
             // EmailJS Configuration
-            const serviceID = 'service_d56n9km';
+            const serviceID = 'service_8q2fa6g';
             const templateID = 'template_mpencfi';
 
-            const templateParams = {
-                from_name: document.getElementById('name').value,
-                from_email: document.getElementById('email').value,
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value,
-                to_name: "E Charan Kumar Reddy" // Optional: Add if your template uses it
-            };
-
-            emailjs.send(serviceID, templateID, templateParams)
+            emailjs.sendForm(serviceID, templateID, contactForm)
                 .then(() => {
                     contactForm.classList.add('success');
                     contactForm.reset();
@@ -133,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         btn.disabled = false;
                     }, 5000);
                 }, (err) => {
-                    alert('Failed to send message. Please try again later.');
+                    alert('Failed to send message: ' + (err.text || err.message || 'Unknown error'));
                     console.error('EmailJS Error:', err);
                     btn.innerText = originalText;
                     btn.disabled = false;
